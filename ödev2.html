@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <title>Yapılacaklar Listesi</title>
+    <style>
+      .header{
+        background-color: #F59914;
+        padding:30px;
+      }
+      img{
+        background-color: white;
+      }
+      h2{
+        color:white;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div class="header text-center">
+        <img
+          src="https://cdn.sanity.io/images/9kdepi1d/production/65c832d202a503b15d99e628f4313782f3ef50db-300x62.png"
+          class="mb-1"
+          alt=""
+        />
+        <h2>Yapılacaklar Listesi</h2>
+        <form class="d-flex">
+        <input type="text" class="form-control mt-1" id="task" placeholder="Bugün ne yapacaksın?"/>
+        <button class="btn btn-secondary w-25 mt-1" id="addBtn">Ekle</button>
+      </form>
+      </div>
+      <ul class="list-group" id="list">
+      </ul>
+    </div>
+      <script>     
+
+                // DOM Selects
+        inputDOM=document.querySelector("#task");
+        ulDOM=document.querySelector("#list");
+        addBtnDOM=document.querySelector("#addBtn");
+
+                // Add Button Event
+        addBtnDOM.addEventListener("click",liMaker);
+        function liMaker(e){
+          e.preventDefault();
+
+          if(inputDOM.value==""){
+            alert("Listeye boş ekleme yapamazsınız!");
+          }else{
+          // create li
+         var liDOM=document.createElement("li");
+         liDOM.classList.add("list-group-item");
+         liDOM.style.cursor="pointer";
+
+          // create a
+         var aDOM=document.createElement("a");
+         aDOM.setAttribute("href","#");
+         aDOM.classList.add("delete-item", "float-right", "text-secondary");
+         aDOM.innerHTML=`<i class="bi bi-x-lg"></i>`;
+
+          // li value
+         liDOM.innerHTML=inputDOM.value;
+
+          // appends
+          ulDOM.appendChild(liDOM);
+          liDOM.appendChild(aDOM);
+
+          // input reset
+          inputDOM.value="";
+
+          // delete li
+          aDOM.addEventListener("click",() => {
+            liDOM.remove()});      
+
+                // Text Decoration Functions
+            function lineThrough(){
+            liDOM.style.textDecoration="line-through",
+            liDOM.style.background="lightgray";
+            };
+            function textDecoNone(){
+            liDOM.style.textDecoration="none",
+            liDOM.style.background="none"
+            };
+          // click counter
+            var clickCounter=0;
+            liDOM.onclick=function(){
+              clickCounter++;
+              if(clickCounter%2==1){
+                lineThrough();
+              }else if(clickCounter%2==0){
+                textDecoNone();
+              }
+            }
+            
+        }};
+
+      </script>
+      <script
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"
+      ></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"
+      ></script>
+  </body>
+</html>
